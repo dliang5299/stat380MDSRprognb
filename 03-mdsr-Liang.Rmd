@@ -1,0 +1,399 @@
+---
+title: "MDSR Ch. 3"
+author: "Deric Liang"
+date: "January 11, 2019"
+output: html_notebook
+---
+
+# Front matter
+
+```{r echo=TRUE, message=FALSE}
+# always clean up R environment
+rm(list = ls())
+
+# load all packages here
+library(mdsr)
+library(tidyverse)
+library(lubridate)
+library(mosaic)
+library(NHANES)
+library(macleish)
+library(babynames)
+library(Hmisc)
+
+# user-defined functions here (if any)
+
+
+# load data
+data('CIACountries')
+data('MedicareCharges')
+data('SAT_2010')
+data('HELPrct')
+data('NHANES')
+data('whately_2015')
+data('KidsFeet')
+data('lifetables')
+```
+
+# Chapter Notes
+
+## Section 3.1
+
+### Section 3.1.1
+
+```{r}
+# p. 35
+gCountries <-
+  CIACountries %>%
+  ggplot(aes(y = gdp, x = educ))
+gCountries + 
+  geom_point(size = 3)
+```
+
+```{r}
+# p. 35
+gCountries +
+  aes(color = net_users) %>%
+  geom_point(size = 3)
+```
+
+```{r}
+# p. 36
+gCountries +
+  aes(label = country, color = net_users) %>%
+  geom_text(size = 3)
+```
+
+```{r}
+# p. 36
+gCountries +
+  aes(color = net_users, size = roadways) %>%
+  geom_point()
+```
+
+### Section 3.1.2
+
+```{r}
+# p. 37
+gCountries +
+  aes(color = net_users, size = roadways) %>%
+  geom_point() +
+  coord_trans(y = 'log10')
+```
+
+```{r}
+# p. 37
+gCountries +
+  aes(color = net_users, size = roadways) %>%
+  geom_point() +
+  scale_y_continuous(name = 'Gross Domestic Product', trans = 'log10')
+```
+
+### Section 3.1.3
+
+### Section 3.1.4
+
+```{r}
+# p. 38
+gCountries +
+  geom_point(alpha = 0.9, aes(size = roadways)) +
+  coord_trans(y = 'log10') +
+  facet_wrap(~net_users, nrow = 1) +
+  theme(legend.position = 'top')
+```
+
+### Section 3.1.5
+
+```{r}
+# p. 39
+ChargesNJ <-
+  MedicareCharges %>%
+  filter(stateProvider == 'NJ')
+ChargesNJ
+```
+
+## Section 3.2
+
+### Section 3.2.1
+
+```{r}
+# p. 39
+gSAT <-
+  SAT_2010 %>%
+  ggplot(aes(x = math))
+gSAT
+```
+
+```{r}
+# p. 40
+p <- 
+  ChargesNJ %>%
+  ggplot(aes(x = reorder(drg, mean_charge), y = mean_charge)) +
+  geom_bar(fill = 'gray', stat = 'identity') +
+  ylab('Statewide Average Charges ($)') +
+  xlab('Medical Procedure (DRG)') +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+p
+```
+
+```{r}
+# p. 40
+p +
+  geom_point(data = MedicareCharges, size = 1, alpha = 0.3)
+```
+
+```{r}
+# p. 41
+gSAT +
+  geom_histogram(binwidth = 10)
+```
+
+```{r}
+# p. 42
+gSAT +
+  geom_density(adjust = 0.3)
+```
+
+```{r}
+# p. 42
+head(SAT_2010, 10) %>%
+  ggplot(aes(x = reorder(state, math), y = math)) +
+  geom_bar(stat = 'identity')
+```
+
+```{r}
+# p. 43
+HELPrct %>%
+  ggplot(aes(x = homeless)) +
+  geom_bar(aes(fill = substance), position = 'fill') +
+  coord_flip()
+```
+
+### Section 3.2.2
+
+```{r}
+# p. 43
+gSAT <-
+  SAT_2010 %>%
+  ggplot(aes(x = expenditure, y = math)) +
+  geom_point()
+gSAT
+```
+
+```{r}
+# p. 43
+gSAT <- 
+  gSAT +
+  geom_smooth(method = 'lm', se = 0) +
+  xlab('Average expenditure per student ($1000)') +
+  ylab('Average score on math SAT')
+gSAT
+```
+
+```{r}
+# p. 44
+SAT_2010 <-
+  SAT_2010 %>%
+  mutate(SAT_rate = 
+           cut(sat_pct,
+               breaks = c(0, 30, 60, 100),
+               labels = c('low', 'medium', 'high')))
+gSAT <- 
+  gSAT %+%
+  SAT_2010
+gSAT
+```
+
+```{r}
+# p. 44
+gSAT +
+  aes(color = SAT_rate)
+```
+
+```{r}
+# p. 45
+gSAT +
+  facet_wrap(~ SAT_rate)
+```
+
+```{r}
+# p. 45
+sample_n(NHANES, size = 1000) %>%
+  ggplot(aes(x = Age, y = Height, color = Gender)) +
+  geom_point() +
+  geom_smooth() +
+  xlab('Age (years)') +
+  ylab('Height (cm)')
+```
+
+```{r}
+# p. 46
+whately_2015 %>%
+  ggplot(aes(x = when, y = temperature)) +
+  geom_line(color = 'darkgray') +
+  geom_smooth() +
+  xlab(NULL) +
+  ylab('Temperature (degrees Fahrenheit)')
+```
+
+```{r}
+# p. 46
+favstats(length ~ sex, data = KidsFeet)
+```
+
+```{r}
+# p. 47
+KidsFeet %>%
+  ggplot(aes(x = sex, y = length)) +
+  geom_boxplot()
+```
+
+### Section 3.2.3
+
+### Section 3.2.4
+
+## Section 3.3
+
+```{r}
+# p. 49
+BabynamesDist <-
+  make_babynames_dist()
+head(BabynamesDist, 2)
+```
+
+```{r}
+# p. 50
+BabynamesDist %>%
+  filter(name == 'Benjamin')
+```
+
+### Section 3.3.1
+
+```{r}
+# p. 51
+joseph <-
+  BabynamesDist %>%
+  filter(name == 'Joseph' &
+           sex == 'M')
+name_plot <-
+  joseph %>%
+  ggplot(aes(x = year))
+name_plot
+```
+
+```{r}
+# p. 51
+name_plot <-
+  name_plot +
+  geom_bar(stat = 'identity',
+           aes(y = count_thousands * alive_prob),
+           fill = '#b2d7e9',
+           color = 'white'
+           )
+name_plot
+```
+
+```{r}
+# p. 51
+name_plot <-
+  name_plot +
+  geom_line(aes(y = count_thousands),
+            size = 2)
+name_plot
+```
+
+```{r}
+# p. 51
+name_plot <-
+  name_plot +
+  ylab('Number of People (thousands)') +
+  xlab(NULL)
+name_plot
+```
+
+```{r}
+# p. 51
+summary(name_plot)
+```
+
+```{r}
+# p. 52
+wtd.quantile <- 
+  Hmisc::wtd.quantile
+median_yob <-
+  joseph %>%
+  with(wtd.quantile(year, est_alive_today, probs = 0.5))
+median_yob
+```
+
+```{r}
+# p. 52
+name_plot <-
+  name_plot +
+  geom_bar(stat = 'identity',
+           color = 'white',
+           fill = '#008fd5',
+           aes(y = ifelse(year == median_yob,
+               est_alive_today / 1000, 0)))
+name_plot
+```
+
+```{r}
+# p. 52
+name_plot +
+  ggtitle('Age Distribution of American Boys Named Joseph') +
+  geom_text(x = 1935, 
+            y = 40, 
+            label = 'Number of Josephs\nborn each year') +
+  geom_text(x = 1915, 
+            y = 13, 
+            label = 
+              'Number of Josephs\nborn each year\nestimated to be alive\non 1/1/2014',
+            color = '#b2d7e9') +
+  geom_text(x = 2003,
+            y = 40,
+            label = 'The median\nliving Josephs\nis 37 years old',
+            color = 'darkgray') +
+  geom_curve(x = 1995, 
+             xend = 1974, 
+             y = 40, 
+             yend = 24,
+             arrow = arrow(length = unit(0.3, 'cm')),
+             curvature = 0.5) +
+  ylim(0, 42)
+```
+
+```{r}
+# p. 53
+name_plot %+%
+  filter(BabynamesDist, 
+         name == 'Josephine' &
+           sex == 'F')
+```
+
+```{r}
+# p. 54
+names_plot <-
+  name_plot +
+  facet_wrap(~sex)
+names_plot %+%
+  filter(BabynamesDist, name == 'Jessie')
+```
+
+```{r}
+# p. 54
+many_names_plot <-
+  names_plot +
+  facet_grid(name ~ sex)
+mnp <-
+  many_names_plot %+%
+  filter(BabynamesDist, name %in%
+           c('Jessie', 'Marion', 'Jackie'))
+mnp
+```
+
+```{r}
+# p. 55
+mnp +
+  facet_grid(sex ~ name)
+```
