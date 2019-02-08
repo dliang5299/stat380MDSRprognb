@@ -18,12 +18,13 @@ library(mosaic)
 library(lubridate)
 library(ggplot2)
 library(NHANES)
-
-# user-defined functions here (if any)
+library(broom)
 
 # load data
 data('RailTrail')
+### data on volume of users of a rail trail
 data('NHANES')
+### data from health and nutrition surveys
 ```
 
 # Section E.1
@@ -189,11 +190,95 @@ confint(mod_p_planes)
 
 # Section E.4
 
+```{r}
+# p. 476
+mplot(mod_p_planes, which = 1, system = 'ggplot2')
+```
 
+```{r}
+# p. 476
+mplot(mod_p_planes, which = 2, system = 'ggplot2')
+```
 
+```{r}
+# p. 476
+mplot(mod_p_planes, which = 3, system = 'ggplot2')
+```
 
+```{r}
+# p. 477
+mplot(mod_p_planes, which = 4, system = 'ggplot2')
+```
 
+```{r}
+# p. 477
+augment(mod_p_planes) %>%
+  filter(.cooksd > 0.4)
+```
 
+# Section E.5
 
+```{r}
+# p. 478
+NHANES <-
+  NHANES %>%
+  mutate(has_diabetes = as.numeric(Diabetes == 'Yes'))
+log_plot <-
+  ggplot(data = NHANES,
+         aes(x = Age, y = has_diabetes)) +
+  geom_jitter(alpha = 0.1, height = 0.05) +
+  geom_smooth(method = 'glm', method.args = list(family = 'binomial')) +
+  ylab('Diabetes status')
+log_plot
+```
 
+```{r}
+# p. 478
+logreg <-
+  glm(has_diabetes ~ BMI + Age,
+      family = 'binomial',
+      data = NHANES)
+msummary(logreg)
+```
 
+```{r}
+# p. 479
+ages <-
+  range(~ Age, data = NHANES)
+bmis <-
+  range(~ BMI, data = NHANES, na.rm = TRUE)
+res <-
+  100
+fake_grid <-
+  expand.grid(
+    Age = seq(from = ages[1], to = ages[2], length.out = res),
+    BMI = seq(from = bmis[1], to = bmis[2], length.out = res)
+  )
+y_hats <-
+  fake_grid %>%
+  mutate(y_hat = predict(logreg, newdata = ., type = 'response'))
+y_hats
+```
+
+```{r}
+# p. 479
+ggplot(data = NHANES, aes(x = Age, y = BMI)) +
+  geom_tile(data = y_hats, aes(fill = y_hat), color = NA) +
+  geom_count(aes(color = as.factor(has_diabetes)), alpha = 0.4) +
+  scale_fill_gradient(low = 'white', high = 'dodgerblue') +
+  scale_color_manual('Diabetes', values = c('gray', 'gold')) +
+  scale_size(range = c(0,2))
+```
+
+```{r}
+# p. 480
+log_plot +
+  xlab('Age (in years)')
+```
+
+```{r}
+# p. 480
+log_plot +
+  aes(x = BMI) +
+  xlab('BMI (body mass index)')
+```
