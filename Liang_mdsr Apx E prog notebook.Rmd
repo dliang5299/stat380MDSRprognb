@@ -88,7 +88,7 @@ diff(mean(volume ~ weekday,
 # p. 469
 RailTrail <-
   RailTrail %>%
-  mutate(day = ifelse(weekday ==1,
+  mutate(day = ifelse(weekday == 1,
                       'weekday',
                       'weekend/holiday'))
 ```
