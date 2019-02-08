@@ -211,7 +211,7 @@ $(document).ready(function () {
 </style>
 <script>
 $(document).ready(function () {
-  window.initializeSourceEmbed("Liang_MDSR Appendix E prog notebook.Rmd");
+  window.initializeSourceEmbed("Liang_mdsr Apx E prog notebook.Rmd");
   window.initializeCodeFolding("show" === "show");
 });
 </script>
@@ -471,9 +471,107 @@ coef(mod_planes)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzJcbm1vZF9wX3BsYW5lcyA8LVxuICBsbSh2b2x1bWUgfiBoaWdodGVtcCArIHByZWNpcCArIHdlZWtkYXksIGRhdGEgPSBSYWlsVHJhaWwpXG5jb2VmKG1vZF9wX3BsYW5lcylcbmBgYCJ9 -->
+<pre class="r"><code># p. 472
+mod_p_planes &lt;-
+  lm(volume ~ hightemp + precip + weekday, data = RailTrail)
+coef(mod_p_planes)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiKEludGVyY2VwdCkgICAgaGlnaHRlbXAgICAgICBwcmVjaXAgd2Vla2RheVRSVUUgXG4gIDE5LjMxODgyOCAgICA1LjgwMDY3NCAtMTQ1LjYwODk4NSAgLTQzLjE0NDMxMyBcbiJ9 -->
+<pre><code>(Intercept)    hightemp      precip weekdayTRUE 
+  19.318828    5.800674 -145.608985  -43.144313 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="section-e.2.3" class="section level2">
+<h2>Section E.2.3</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzJcbm1vZF9pbnRlcmFjdCA8LVxuICBsbSh2b2x1bWUgfiBoaWdodGVtcCArIHdlZWtkYXkgKyBoaWdodGVtcCAqIHdlZWtkYXksXG4gICAgIGRhdGEgPSBSYWlsVHJhaWwpXG5jb2VmKG1vZF9pbnRlcmFjdClcbmBgYCJ9 -->
+<pre class="r"><code># p. 472
+mod_interact &lt;-
+  lm(volume ~ hightemp + weekday + hightemp * weekday,
+     data = RailTrail)
+coef(mod_interact)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgKEludGVyY2VwdCkgICAgICAgICAgICAgaGlnaHRlbXAgICAgICAgICAgd2Vla2RheVRSVUUgaGlnaHRlbXA6d2Vla2RheVRSVUUgXG4gICAgICAgICAgMTM1LjE1Mjk1NSAgICAgICAgICAgICA0LjA3NDcwMSAgICAgICAgICAtMTg2LjM3NzAwNSAgICAgICAgICAgICAxLjkwNTU4MCBcbiJ9 -->
+<pre><code>         (Intercept)             hightemp          weekdayTRUE hightemp:weekdayTRUE 
+          135.152955             4.074701          -186.377005             1.905580 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucnNxdWFyZWQobW9kX2ludGVyYWN0KVxuYGBgIn0= -->
+<pre class="r"><code>rsquared(mod_interact)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuMzgxNjMwOVxuIn0= -->
+<pre><code>[1] 0.3816309</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzJcbnBsb3RNb2RlbChtb2RfaW50ZXJhY3QsIHN5c3RlbSA9ICdnZ3Bsb3QyJylcbmBgYCJ9 -->
+<pre class="r"><code># p. 472
+plotModel(mod_interact, system = 'ggplot2')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzNcbk5IQU5FUyAlPiVcbiAgc2FtcGxlKDMwMCkgJT4lXG4gIGZpbHRlcihHZW5kZXIgPT0gJ2ZlbWFsZScpICU+JVxuICBnZ3Bsb3QoYWVzKHggPSBBZ2UsIHkgPSBIZWlnaHQpKSArXG4gIGdlb21fcG9pbnQoKSArXG4gIHN0YXRfc21vb3RoKG1ldGhvZCA9IGxtLCBzZSA9IDApICtcbiAgc3RhdF9zbW9vdGgobWV0aG9kID0gbG9lc3MsIHNlID0gMCwgY29sb3IgPSAnZ3JlZW4nKSArXG4gIHhsYWIoJ0FnZSAoaW4geWVhcnMpJykgK1xuICB5bGFiKCdIZWlnaHQgKGluIGNtKScpXG5gYGAifQ== -->
+<pre class="r"><code># p. 473
+NHANES %&gt;%
+  sample(300) %&gt;%
+  filter(Gender == 'female') %&gt;%
+  ggplot(aes(x = Age, y = Height)) +
+  geom_point() +
+  stat_smooth(method = lm, se = 0) +
+  stat_smooth(method = loess, se = 0, color = 'green') +
+  xlab('Age (in years)') +
+  ylab('Height (in cm)')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzNcbmdncGxvdChkYXRhID0gUmFpbFRyYWlsLFxuICAgICAgIGFlcyh4ID0gaGlnaHRlbXAsIHkgPSB2b2x1bWUpKSArXG4gIGdlb21fcG9pbnQoKSArXG4gIHN0YXRfc21vb3RoKG1ldGhvZCA9IGxtKSArXG4gIHN0YXRfc21vb3RoKG1ldGhvZCA9IGxvZXNzLCBjb2xvciA9ICdncmVlbicpICtcbiAgeGxhYignSGlnaCBUZW1wZXJhdHVyZSAoRiknKSArXG4gIHlsYWIoJ051bWJlciBvZiB0cmFpbCBjcm9zc2luZ3MnKVxuYGBgIn0= -->
+<pre class="r"><code># p. 473
+ggplot(data = RailTrail,
+       aes(x = hightemp, y = volume)) +
+  geom_point() +
+  stat_smooth(method = lm) +
+  stat_smooth(method = loess, color = 'green') +
+  xlab('High Temperature (F)') +
+  ylab('Number of trail crossings')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="section-e.3" class="section level1">
+<h1>Section E.3</h1>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzRcbm1zdW1tYXJ5KG1vZF9wX3BsYW5lcylcbmBgYCJ9 -->
+<pre class="r"><code># p. 474
+msummary(mod_p_planes)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBwLiA0NzVcbmNvbmZpbnQobW9kX3BfcGxhbmVzKVxuYGBgIn0= -->
+<pre class="r"><code># p. 475
+confint(mod_p_planes)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="section-e.4" class="section level1">
+<h1>Section E.4</h1>
+<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFwcGVuZGl4IEUgUHJvZ3JhbW1pbmcgTm90ZWJvb2siDQphdXRob3I6ICdEZXJpYyBMaWFuZycNCmRhdGU6ICJEdWUgMi8xMC8xOSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCiMgRnJvbnQgbWF0dGVyDQoNCmBgYHtyIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRX0NCiMgYWx3YXlzIGNsZWFuIHVwIFIgZW52aXJvbm1lbnQNCnJtKGxpc3QgPSBscygpKQ0KDQojIGxvYWQgYWxsIHBhY2thZ2VzIGhlcmUNCmxpYnJhcnkobWRzcikNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShtb3NhaWMpDQpsaWJyYXJ5KGx1YnJpZGF0ZSkNCmxpYnJhcnkoZ2dwbG90MikNCg0KIyB1c2VyLWRlZmluZWQgZnVuY3Rpb25zIGhlcmUgKGlmIGFueSkNCg0KIyBsb2FkIGRhdGENCmRhdGEoJ1JhaWxUcmFpbCcpDQpgYGANCg0KIyBTZWN0aW9uIEUuMQ0KDQojIyBTZWN0aW9uIEUuMS4xDQoNCmBgYHtyfQ0KIyBwLiA0NjYNCmdsaW1wc2UoUmFpbFRyYWlsKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjYNCm1vZCA8LQ0KICBsbSh2b2x1bWUgfiBoaWdodGVtcCwNCiAgICAgZGF0YSA9IFJhaWxUcmFpbCkNCmNvZWYobW9kKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjcNCnBsb3RNb2RlbChtb2QsIHN5c3RlbSA9ICdnZ3Bsb3QyJykNCmBgYA0KDQojIyBTZWN0aW9uIEUuMS4yDQoNCiMjIFNlY3Rpb24gRS4xLjMNCg0KYGBge3J9DQojIHAuIDQ2OA0KbiA8LQ0KICBucm93KFJhaWxUcmFpbCkNClNTVCA8LQ0KICB2YXIofiB2b2x1bWUsIGRhdGEgPSBSYWlsVHJhaWwpICoNCiAgKG4gLSAxKQ0KU1NFIDwtDQogIHZhcihyZXNpZHVhbHMobW9kKSkgKg0KICAobiAtIDEpDQoxIC0gU1NFIC8gU1NUDQpyc3F1YXJlZChtb2QpDQpgYGANCg0KIyMgU2VjdGlvbiBFLjEuNA0KDQpgYGB7cn0NCiMgcC4gNDY5DQpsbSh2b2x1bWUgfiB3ZWVrZGF5LCBkYXRhID0gUmFpbFRyYWlsKSAlPiUNCiAgY29lZigpDQpgYGANCg0KYGBge3J9DQojIHAuIDQ2OQ0KbWVhbih2b2x1bWUgfiB3ZWVrZGF5LCBkYXRhID0gUmFpbFRyYWlsKQ0KZGlmZihtZWFuKHZvbHVtZSB+IHdlZWtkYXksIGRhdGEgPSBSYWlsVHJhaWwpKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjkNClJhaWxUcmFpbCA8LQ0KICBSYWlsVHJhaWwgJT4lDQogIG11dGF0ZShkYXkgPSBpZmVsc2Uod2Vla2RheSA9PTEsDQogICAgICAgICAgICAgICAgICAgICAgJ3dlZWtkYXknLA0KICAgICAgICAgICAgICAgICAgICAgICd3ZWVrZW5kL2hvbGlkYXknKSkNCmBgYA0KDQpgYGB7cn0NCiMgcC4gNDY5DQpsbSh2b2x1bWUgfiBkYXksIGRhdGEgPSBSYWlsVHJhaWwpICU+JQ0KICBjb2VmKCkNCmBgYA0KDQojIFNlY3Rpb24gRS4yDQoNCiMjIFNlY3Rpb24gRS4yLjENCg0KYGBge3J9DQojIHAuIDQ3MA0KbW9kX3BhcmFsbGVsIDwtDQogIGxtKHZvbHVtZSB+IGhpZ2h0ZW1wICsgd2Vla2RheSwgZGF0YSA9IFJhaWxUcmFpbCkNCmNvZWYobW9kX3BhcmFsbGVsKQ0KcnNxdWFyZWQobW9kX3BhcmFsbGVsKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NzENCnBsb3RNb2RlbChtb2RfcGFyYWxsZWwsIHN5c3RlbSA9ICdnZ3Bsb3QyJykNCmBgYA0KDQojIFNlY3Rpb24gRS4yLjINCg0KYGBge3J9DQojIHAuIDQ3MQ0KbW9kX3BsYW5lcyA8LQ0KICBsbSh2b2x1bWUgfiBoaWdodGVtcCArIHByZWNpcCwgZGF0YSA9IFJhaWxUcmFpbCkNCmNvZWYobW9kX3BsYW5lcykNCmBgYA0KDQoNCg0KDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFwcGVuZGl4IEUgUHJvZ3JhbW1pbmcgTm90ZWJvb2siDQphdXRob3I6ICdEZXJpYyBMaWFuZycNCmRhdGU6ICJEdWUgMi8xMC8xOSINCm91dHB1dDogaHRtbF9ub3RlYm9vaw0KLS0tDQoNCiMgRnJvbnQgbWF0dGVyDQoNCmBgYHtyIGVjaG89VFJVRSwgbWVzc2FnZT1GQUxTRX0NCiMgYWx3YXlzIGNsZWFuIHVwIFIgZW52aXJvbm1lbnQNCnJtKGxpc3QgPSBscygpKQ0KDQojIGxvYWQgYWxsIHBhY2thZ2VzIGhlcmUNCmxpYnJhcnkobWRzcikNCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShtb3NhaWMpDQpsaWJyYXJ5KGx1YnJpZGF0ZSkNCmxpYnJhcnkoZ2dwbG90MikNCmxpYnJhcnkoTkhBTkVTKQ0KDQojIHVzZXItZGVmaW5lZCBmdW5jdGlvbnMgaGVyZSAoaWYgYW55KQ0KDQojIGxvYWQgZGF0YQ0KZGF0YSgnUmFpbFRyYWlsJykNCmRhdGEoJ05IQU5FUycpDQpgYGANCg0KIyBTZWN0aW9uIEUuMQ0KDQojIyBTZWN0aW9uIEUuMS4xDQoNCmBgYHtyfQ0KIyBwLiA0NjYNCmdsaW1wc2UoUmFpbFRyYWlsKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjYNCm1vZCA8LQ0KICBsbSh2b2x1bWUgfiBoaWdodGVtcCwNCiAgICAgZGF0YSA9IFJhaWxUcmFpbCkNCmNvZWYobW9kKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjcNCnBsb3RNb2RlbChtb2QsIHN5c3RlbSA9ICdnZ3Bsb3QyJykNCmBgYA0KDQojIyBTZWN0aW9uIEUuMS4yDQoNCiMjIFNlY3Rpb24gRS4xLjMNCg0KYGBge3J9DQojIHAuIDQ2OA0KbiA8LQ0KICBucm93KFJhaWxUcmFpbCkNClNTVCA8LQ0KICB2YXIofiB2b2x1bWUsIGRhdGEgPSBSYWlsVHJhaWwpICoNCiAgKG4gLSAxKQ0KU1NFIDwtDQogIHZhcihyZXNpZHVhbHMobW9kKSkgKg0KICAobiAtIDEpDQoxIC0gU1NFIC8gU1NUDQpyc3F1YXJlZChtb2QpDQpgYGANCg0KIyMgU2VjdGlvbiBFLjEuNA0KDQpgYGB7cn0NCiMgcC4gNDY5DQpsbSh2b2x1bWUgfiB3ZWVrZGF5LCANCiAgIGRhdGEgPSBSYWlsVHJhaWwpICU+JQ0KICBjb2VmKCkNCmBgYA0KDQpgYGB7cn0NCiMgcC4gNDY5DQptZWFuKHZvbHVtZSB+IHdlZWtkYXksIA0KICAgICBkYXRhID0gUmFpbFRyYWlsKQ0KZGlmZihtZWFuKHZvbHVtZSB+IHdlZWtkYXksIA0KICAgICAgICAgIGRhdGEgPSBSYWlsVHJhaWwpKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NjkNClJhaWxUcmFpbCA8LQ0KICBSYWlsVHJhaWwgJT4lDQogIG11dGF0ZShkYXkgPSBpZmVsc2Uod2Vla2RheSA9PTEsDQogICAgICAgICAgICAgICAgICAgICAgJ3dlZWtkYXknLA0KICAgICAgICAgICAgICAgICAgICAgICd3ZWVrZW5kL2hvbGlkYXknKSkNCmBgYA0KDQpgYGB7cn0NCiMgcC4gNDY5DQpsbSh2b2x1bWUgfiBkYXksIA0KICAgZGF0YSA9IFJhaWxUcmFpbCkgJT4lDQogIGNvZWYoKQ0KYGBgDQoNCiMgU2VjdGlvbiBFLjINCg0KIyMgU2VjdGlvbiBFLjIuMQ0KDQpgYGB7cn0NCiMgcC4gNDcwDQptb2RfcGFyYWxsZWwgPC0NCiAgbG0odm9sdW1lIH4gaGlnaHRlbXAgKyB3ZWVrZGF5LA0KICAgICBkYXRhID0gUmFpbFRyYWlsKQ0KY29lZihtb2RfcGFyYWxsZWwpDQpyc3F1YXJlZChtb2RfcGFyYWxsZWwpDQpgYGANCg0KYGBge3J9DQojIHAuIDQ3MQ0KcGxvdE1vZGVsKG1vZF9wYXJhbGxlbCwgc3lzdGVtID0gJ2dncGxvdDInKQ0KYGBgDQoNCiMgU2VjdGlvbiBFLjIuMg0KDQpgYGB7cn0NCiMgcC4gNDcxDQptb2RfcGxhbmVzIDwtDQogIGxtKHZvbHVtZSB+IGhpZ2h0ZW1wICsgcHJlY2lwLA0KICAgICBkYXRhID0gUmFpbFRyYWlsKQ0KY29lZihtb2RfcGxhbmVzKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NzINCm1vZF9wX3BsYW5lcyA8LQ0KICBsbSh2b2x1bWUgfiBoaWdodGVtcCArIHByZWNpcCArIHdlZWtkYXksIA0KICAgICBkYXRhID0gUmFpbFRyYWlsKQ0KY29lZihtb2RfcF9wbGFuZXMpDQpgYGANCg0KIyMgU2VjdGlvbiBFLjIuMw0KDQpgYGB7cn0NCiMgcC4gNDcyDQptb2RfaW50ZXJhY3QgPC0NCiAgbG0odm9sdW1lIH4gaGlnaHRlbXAgKyB3ZWVrZGF5ICsgaGlnaHRlbXAgKiB3ZWVrZGF5LA0KICAgICBkYXRhID0gUmFpbFRyYWlsKQ0KY29lZihtb2RfaW50ZXJhY3QpDQpyc3F1YXJlZChtb2RfaW50ZXJhY3QpDQpgYGANCg0KYGBge3J9DQojIHAuIDQ3Mg0KcGxvdE1vZGVsKG1vZF9pbnRlcmFjdCwgc3lzdGVtID0gJ2dncGxvdDInKQ0KYGBgDQoNCmBgYHtyfQ0KIyBwLiA0NzMNCk5IQU5FUyAlPiUNCiAgc2FtcGxlKDMwMCkgJT4lDQogIGZpbHRlcihHZW5kZXIgPT0gJ2ZlbWFsZScpICU+JQ0KICBnZ3Bsb3QoYWVzKHggPSBBZ2UsIHkgPSBIZWlnaHQpKSArDQogIGdlb21fcG9pbnQoKSArDQogIHN0YXRfc21vb3RoKG1ldGhvZCA9IGxtLCBzZSA9IDApICsNCiAgc3RhdF9zbW9vdGgobWV0aG9kID0gbG9lc3MsIHNlID0gMCwgY29sb3IgPSAnZ3JlZW4nKSArDQogIHhsYWIoJ0FnZSAoaW4geWVhcnMpJykgKw0KICB5bGFiKCdIZWlnaHQgKGluIGNtKScpDQpgYGANCg0KYGBge3J9DQojIHAuIDQ3Mw0KZ2dwbG90KGRhdGEgPSBSYWlsVHJhaWwsDQogICAgICAgYWVzKHggPSBoaWdodGVtcCwgeSA9IHZvbHVtZSkpICsNCiAgZ2VvbV9wb2ludCgpICsNCiAgc3RhdF9zbW9vdGgobWV0aG9kID0gbG0pICsNCiAgc3RhdF9zbW9vdGgobWV0aG9kID0gbG9lc3MsIGNvbG9yID0gJ2dyZWVuJykgKw0KICB4bGFiKCdIaWdoIFRlbXBlcmF0dXJlIChGKScpICsNCiAgeWxhYignTnVtYmVyIG9mIHRyYWlsIGNyb3NzaW5ncycpDQpgYGANCg0KIyBTZWN0aW9uIEUuMw0KDQpgYGB7cn0NCiMgcC4gNDc0DQptc3VtbWFyeShtb2RfcF9wbGFuZXMpDQpgYGANCg0KYGBge3J9DQojIHAuIDQ3NQ0KY29uZmludChtb2RfcF9wbGFuZXMpDQpgYGANCg0KIyBTZWN0aW9uIEUuNA0KDQoNCg0KDQoNCg0KDQoNCg0K</div>
 
 
 
