@@ -1,0 +1,61 @@
+---
+title: "Chapter 8 Programming Notebook"
+author: 'Deric Liang'
+date: 'Due 2/17/19'
+output: html_notebook
+---
+
+# Front matter
+
+```{r echo=TRUE, message=FALSE}
+# always clean up R environment
+rm(list = ls())
+
+# load all packages here
+library(mdsr)
+library(tidyverse)
+library(mosaic)
+library(lubridate)
+library(ggplot2)
+
+# load data
+
+```
+
+# Section 8.1
+
+```{r}
+# p. 172
+diabetic ~ age + sex + weight + height
+```
+
+# Section 8.2
+
+## Section 8.2.1
+
+## Section 8.2.2
+
+```{r}
+census <-
+  read.csv(
+    'http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data',
+    header = FALSE
+    )
+names(census) <- c('age', 'workclass', 'fnlwgt', 'education', 'education.num',
+                   'marital.status', 'occupation', 'relationship', 'race',
+                   'sex', 'capital.gain', 'capital.loss', 'hours.per.week',
+                   'native.country', 'income')
+glimpse(census)
+```
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
