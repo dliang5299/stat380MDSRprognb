@@ -1,0 +1,63 @@
+---
+title: "Chapter 9 Programming Notebook"
+author: 'Deric Liang'
+date: 'Due 2/24/19'
+output: html_notebook
+---
+
+# Front matter
+
+```{r echo=TRUE, message=FALSE}
+# always clean up R environment
+rm(list = ls())
+
+# load all packages here
+library(mdsr)
+library(tidyverse)
+library(mosaic)
+library(lubridate)
+library(ggplot2)
+library(readxl)
+
+# load data
+
+```
+
+# Section 9.1
+
+## Section 9.1.1
+
+```{r}
+# p. 206
+download.file('https://www.fueleconomy.gov/feg/epadata/16data.zip',
+              destfile = 'data/fueleconomy.zip')
+unzip('data/fueleconomy.zip', exdir = 'data/fueleconomy')
+```
+
+```{r}
+# p. 207
+filename <-
+  list.files('data/fueleconomy', pattern = 'public\\.xlsx')[1]
+cars <-
+  paste0('data/fueleconomy/', filename) %>%
+  read_excel() %>%
+  data.frame()
+cars <-
+  cars %>%
+  rename(make = Mfr.Name, model = Carline, displacement = Eng.Displ,
+         cylinders = X..Cyl, city_mpg = City.FE..Guide....Conventional.Fuel,
+         hwy_mpg = Hwy.FE..Guide....Conventional.Fuel, gears = X..Gears) %>%
+  select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) %>%
+  distinct(model, .keep_all = TRUE) %>%
+  filter(make == 'Toyota')
+rownames(cars) <-
+  cars$model
+glimpse(cars)
+```
+
+
+
+
+
+
+
